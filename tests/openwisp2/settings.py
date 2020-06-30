@@ -37,7 +37,11 @@ INSTALLED_APPS = [
     'openwisp_users',
     'django.contrib.admin',
     'openwisp_notifications',
+    # channels
+    'channels',
 ]
+
+ASGI_APPLICATION = "openwisp2.routing.application"
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -110,6 +114,13 @@ CACHES = {
         'LOCATION': 'redis://localhost/5',
         'OPTIONS': {'CLIENT_CLASS': 'django_redis.client.DefaultClient',},
     }
+}
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {"hosts": [("127.0.0.1", 6379)],},
+    },
 }
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'

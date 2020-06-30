@@ -151,7 +151,7 @@ function notificationWidget($) {
         onUpdate();
     }
 
-    function refreshNotificationWidget(url = '/api/v1/notifications/') {
+    function refreshNotificationWidget(e = null, url = '/api/v1/notifications/') {
         $('.accordion').empty();
         $('.loader').removeClass('hide');
         fetchedPages.length = 0;
@@ -217,4 +217,6 @@ function notificationWidget($) {
             }
         }
     });
+
+    $('.accordion').bind('refreshNotificationWidget', refreshNotificationWidget);
 }
