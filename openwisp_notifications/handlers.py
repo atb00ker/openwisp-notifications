@@ -168,7 +168,12 @@ def clear_notification_cache(sender, instance, **kwargs):
     except AttributeError:
         return
     # Reload notification only if notification is created or deleleted
-    ws_handlers.update_widget(reload_widget=kwargs.get('created', True))
+    # Display when a new notification is created
+    ws_handlers.update_widget(
+        recipient=instance.recipient,
+        reload_widget=kwargs.get('created', True),
+        notification=instance if kwargs.get('created', None) else None,
+    )
 
 
 @receiver(pre_delete, dispatch_uid='notification_related_object_deleted')

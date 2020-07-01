@@ -2,5 +2,5 @@ coveralls
 django-redis
 openwisp-utils[qa]>=0.5.0
 redis
-channels-redis
+channels_redis
 

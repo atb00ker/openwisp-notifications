@@ -1,6 +1,6 @@
 from django.urls import reverse
 from openwisp_notifications.swapper import load_model
-from openwisp_notifications.utils import _get_absolute_url
+from openwisp_notifications.utils import NotificationException, _get_absolute_url
 from rest_framework import serializers
 
 Notification = load_model('Notification')
@@ -32,6 +32,13 @@ class NotificationSerializer(serializers.ModelSerializer):
             args=(obj.id,),
         )
         return _get_absolute_url(url)
+
+    @property
+    def data(self):
+        try:
+            return super().data
+        except NotificationException:
+            return None
 
 
 class NotificationListSerializer(NotificationSerializer):
