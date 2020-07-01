@@ -19,12 +19,15 @@ class NotificationConsumer(WebsocketConsumer):
 
     def notification_update_widget(self, event):
         user = self.scope['user']
-        unread_notifications = user.notifications.unread().count()
-        self.send(
-            json.dumps(
-                {
-                    'notification_count': unread_notifications,
-                    'reload_widget': event['reload_widget'],
-                }
+        # Send message only if notification belongs to current user
+        if event['recipient'] == str(user.pk):
+            unread_notifications = user.notifications.unread().count()
+            self.send(
+                json.dumps(
+                    {
+                        'notification_count': unread_notifications,
+                        'reload_widget': event['reload_widget'],
+                        'notification': event['notification'],
+                    }
+                )
             )
-        )

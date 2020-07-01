@@ -6,25 +6,40 @@
         );
         notificationSocket.onmessage = function (e) {
             let data = JSON.parse(e.data);
-            if (data.hasOwnProperty('notification_count')) {
-                let countTag = $('#notification-count');
-                if (data.notification_count === 0) {
-                    countTag.remove();
+            // Update notification count
+            let countTag = $('#notification-count');
+            if (data.notification_count === 0) {
+                countTag.remove();
+            } else {
+                if (countTag.length === 0) {
+                    let html = `<span id="notification-count">${data.notification_count}</span>`;
+                    $('.ow-notifications').append(html);
                 } else {
-                    if (countTag.length === 0) {
-                        let html = `<span id="notification-count">${data.notification_count}</span>`;
-                        $('.ow-notifications').append(html);
-                    } else {
-                        countTag.html(data.notification_count);
-                    }
+                    countTag.html(data.notification_count);
                 }
             }
-            if (data.hasOwnProperty('reload_widget')) {
-                if (data.reload_widget) {
-                    $('.accordion').trigger('refreshNotificationWidget');
-                    $('.loader').addClass('hide');
-                }
+            // Check whether to update notification widget
+            if (data.reload_widget) {
+                $('.accordion').trigger('refreshNotificationWidget');
+                $('.loader').addClass('hide');
+            }
+            // Check whether to display notification toast
+            if (data.notification) {
+                $('.toast').html(data.notification.message);
+                $('.toast').data('location', data.notification.target_object_url);
+                $('.toast').slideDown('slow', function () {
+                    setTimeout(function () {
+                        $('.toast').slideUp('slow', function () {
+                            $('.toast').data('location', null);
+                            $('.toast').empty();
+                        });
+                    }, 4000);
+                });
             }
         };
+        // Make toast message clickable
+        $('.toast').click(function () {
+            window.location = $(this).data("location");
+        });
     });
 })(django.jQuery);

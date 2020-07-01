@@ -74,3 +74,20 @@
   padding: 8px 15px;
   text-decoration: none;
 }
+
+.toast{
+  background-color: #d04124;
+  position: fixed;
+  left: 0;
+  right:0;
+  margin: auto;
+  width: fit-content;
+  text-transform: none;
+  top:5%;
+  display: none;
+}
+
+.toast p{
+  margin: 1em;
+  font-weight: bold;
+}

@@ -32,7 +32,7 @@ def unread_notifications(context):
     return output
 
 
-def notification_widget(context):
+def notification_widget():
     return format_html(
         '''
         <div class="notification-dropdown hide">
@@ -50,5 +50,10 @@ def notification_widget(context):
     )
 
 
+def notification_toast():
+    return format_html('<div class="toast"></div>')
+
+
 register.simple_tag(takes_context=True)(unread_notifications)
-register.simple_tag(takes_context=True)(notification_widget)
+register.simple_tag(takes_context=False)(notification_widget)
+register.simple_tag(takes_context=False)(notification_toast)
