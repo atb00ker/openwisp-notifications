@@ -78,6 +78,9 @@ function notificationWidget($) {
                             $('#show-unread').addClass('disabled');
                         }
                         busy = false;
+                    } else if (!res.results.length) {
+                        busy = false;
+                        onUpdate();
                     } else {
                         fetchedPages.push(res.results);
                         appendPage();

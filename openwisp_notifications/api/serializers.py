@@ -1,3 +1,4 @@
+from django.db import models
 from django.urls import reverse
 from openwisp_notifications.swapper import load_model
 from openwisp_notifications.utils import NotificationException, _get_absolute_url
@@ -9,6 +10,18 @@ Notification = load_model('Notification')
 class ContentTypeField(serializers.Field):
     def to_representation(self, obj):
         return obj.model
+
+
+class ListSerializer(serializers.ListSerializer):
+    def to_representation(self, data):
+        iterable = data.all() if isinstance(data, models.Manager) else data
+        data_list = []
+        for item in iterable:
+            try:
+                data_list.append(self.child.to_representation(item))
+            except NotificationException:
+                continue
+        return data_list
 
 
 class NotificationSerializer(serializers.ModelSerializer):
@@ -43,5 +56,6 @@ class NotificationSerializer(serializers.ModelSerializer):
 
 class NotificationListSerializer(NotificationSerializer):
     class Meta(NotificationSerializer.Meta):
+        list_serializer_class = ListSerializer
         fields = ['id', 'message', 'unread', 'target_object_url', 'email_subject']
         exclude = None
