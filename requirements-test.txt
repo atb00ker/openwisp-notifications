@@ -3,4 +3,5 @@ django-redis
 openwisp-utils[qa]>=0.5.0
 redis
 channels_redis
-
+pytest-asyncio
+pytest-django

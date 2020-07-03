@@ -1,12 +1,7 @@
-import openwisp_notifications.websockets.routing
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
+from openwisp_notifications.websockets import routing as ws_routing
 
 application = ProtocolTypeRouter(
-    {
-        # (http->django views is added by default)
-        'websocket': AuthMiddlewareStack(
-            URLRouter(openwisp_notifications.websockets.routing.websocket_urlpatterns)
-        ),
-    }
+    {'websocket': AuthMiddlewareStack(URLRouter(ws_routing.websocket_urlpatterns))}
 )

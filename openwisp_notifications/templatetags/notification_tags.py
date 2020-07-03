@@ -6,6 +6,7 @@ from notifications.templatetags.notifications_tags import (
     notifications_unread as base_notification_unread,
 )
 from openwisp_notifications.swapper import load_model
+from openwisp_notifications.utils import normalize_unread_count
 
 Notification = load_model('Notification')
 
@@ -18,7 +19,7 @@ def get_notifications_count(context):
     count = cache.get(cache_key)
     if count is None:
         count = base_notification_unread(context)
-        count = '99+' if count > 99 else count
+        count = normalize_unread_count(count)
         cache.set(cache_key, count)
     return count
 

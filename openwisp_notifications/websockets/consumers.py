@@ -2,11 +2,16 @@ import json
 
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from openwisp_notifications.utils import normalize_unread_count
 
 
 class NotificationConsumer(WebsocketConsumer):
     def connect(self):
-        if self.scope['user'].is_authenticated:
+        try:
+            assert self.scope['user'].is_authenticated is True
+        except (KeyError, AssertionError):
+            self.close()
+        else:
             async_to_sync(self.channel_layer.group_add)(
                 "ow_notification", self.channel_name
             )
@@ -21,7 +26,9 @@ class NotificationConsumer(WebsocketConsumer):
         user = self.scope['user']
         # Send message only if notification belongs to current user
         if event['recipient'] == str(user.pk):
-            unread_notifications = user.notifications.unread().count()
+            unread_notifications = normalize_unread_count(
+                user.notifications.unread().count()
+            )
             self.send(
                 json.dumps(
                     {
