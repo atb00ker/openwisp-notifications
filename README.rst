@@ -4,9 +4,31 @@ OpenWISP Notifications Module
 
 .. image:: https://travis-ci.org/openwisp/openwisp-notifications.svg?branch=master
    :target: https://travis-ci.org/openwisp/openwisp-notifications
+   :alt: CI build status
 
 .. image:: https://coveralls.io/repos/github/openwisp/openwisp-notifications/badge.svg?branch=master
    :target: https://coveralls.io/github/openwisp/openwisp-notifications?branch=master
+   :alt: Test Coverage
+
+.. image:: https://requires.io/github/openwisp/openwisp-notifications/requirements.svg?branch=master
+   :target: https://requires.io/github/openwisp/openwisp-notifications/requirements/?branch=master
+   :alt: Requirements Status
+
+.. image:: https://img.shields.io/gitter/room/nwjs/nw.js.svg
+   :target: https://gitter.im/openwisp/general
+   :alt: chat
+
+.. image:: https://badge.fury.io/py/openwisp-notifications.svg
+   :target: http://badge.fury.io/py/openwisp-notifications
+   :alt: Pypi Version
+
+.. image:: https://pepy.tech/badge/openwisp-notifications
+   :target: https://pepy.tech/project/openwisp-notifications
+   :alt: downloads
+
+.. image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://pypi.org/project/black/
+   :alt: code style: black
 
 ------------
 
@@ -14,6 +36,10 @@ OpenWISP Notifications Module
 
 Its main goal is to allow the other OpenWISP modules to notify users about
 meaningful events that happen in their network.
+
+.. image:: https://raw.githubusercontent.com/openwisp/openwisp2-docs/master/assets/design/openwisp-logo-black.svg
+  :target: http://openwisp.org
+  :alt: `http://openwisp.org <http://openwisp.org>`_
 
 ------------
 
@@ -32,7 +58,14 @@ Available features
 - Configurable email theme
 - `Definition of notification types <#notification-types>`_
 - `Possibility to register new notification types <#registering--unregistering-notification-types>`_
-- TODO: add more
+
+Install stable version from pypi
+--------------------------------
+
+Install from pypi:
+
+.. code-block:: shell
+    pip install openwisp-notifications
 
 Install development version
 ---------------------------
